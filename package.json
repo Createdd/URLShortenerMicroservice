@@ -4,7 +4,7 @@
   "description": "A free code camp challenge",
   "main": "index.js",
   "scripts": {
-    "start":"node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,6 +16,9 @@
   "author": "Daniel Deutsch",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.8",
+    "valid-url": "^1.0.9"
   }
 }
