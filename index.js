@@ -51,3 +51,44 @@ app.get("/:id",function(req,res){
     });//urlList find
   }
 });//send 404 or redirect to docs
+
+//create a new shortened URL
+app.get("/new/*?", function(req,res){
+  var validUrl=require("valid-url");//add the validation module
+  var theUrl=req.params[0];
+
+  if(theUrl && validUrl.isUri(theUrl)){
+    urlList.find({url:theUrl}, function(err,docs){
+      if(err){
+        res.status(404).send(err);
+      }
+      if(docs && docs.length){
+        res.status(201).json({
+          "original url":theUrl,
+          "short url": "localhost:3000/"+docs[0].id
+        });//respond with JSON
+      }
+    });//find inside the urllist
+
+
+    urlList.create({url:theUrl},function(req,myUrl){
+      if(err){
+        return handleError(res,err);
+      }
+      return res.status(201).json({
+        "original url":theUrl,
+        "short url": "localhost:3000/"+myUrl.id
+      });
+    });
+  }//if the url is valid
+  else {
+    res.status(400).json({
+      error:"URL invalid"
+    });
+  }
+});//send a new shorted url
+
+//error handler
+function handleError(res,err){
+  return res.status(500).send(err);
+}
