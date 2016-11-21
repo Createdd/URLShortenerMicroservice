@@ -1,5 +1,5 @@
 var mongoose=require("mongoose"),
-var Schema=mongoose.Schema;
+Schema=mongoose.Schema;
 
 //Counter Schema - a Schema maps to mongodb
 var CounterSchema = Schema ({
