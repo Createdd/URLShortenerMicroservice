@@ -1,3 +1,7 @@
+/* jshint node: true */
+/*jshint esversion: 6 */
+"use strict";
+
 var express=require("express");
 var app=express();
 var port=process.env.PORT||3000;
@@ -15,7 +19,11 @@ mongoose.connection.on("error", function(err){
 });//exit process and display error in case of error
 mongoose.connection.once("open", function(){
   console.log("Connecting to MongoDB successful!");
-})//display msg when connected successfully
+});//display msg when connected successfully
+
+app.listen(port, function(){
+  console.log("port listening on port "+port);
+});//listen to a port
 
 //send html file
 app.get("/", function(req, res){
@@ -28,10 +36,6 @@ app.get("/", function(req, res){
     }
   });
 });//sending a html file
-
-app.listen(port, function(){
-  console.log("port listening on port "+port);
-});//listen to a port
 
 //lookup a shortened URL
 app.get("/:id",function(req,res){
@@ -71,7 +75,7 @@ app.get("/new/*?", function(req,res){
     });//find inside the urllist
 
 
-    urlList.create({url:theUrl},function(req,myUrl){
+    urlList.create({url:theUrl},function(err,myUrl){
       if(err){
         return handleError(res,err);
       }
